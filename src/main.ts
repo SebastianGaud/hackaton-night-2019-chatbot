@@ -9,7 +9,7 @@ if (environment.production) {
 }
 
 export function getBaseUrl() {
-    return config.base_url;
+    return environment.base_url;
 }
 
 const providers = [{ provide: "BASE_URL", useFactory: getBaseUrl, deps: [] }];
