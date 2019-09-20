@@ -1,5 +1,5 @@
 import { BrowserModule } from "@angular/platform-browser";
-import { NgModule } from "@angular/core";
+import { NgModule, Injector } from "@angular/core";
 
 import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
@@ -13,6 +13,7 @@ import {
 import { NbEvaIconsModule } from "@nebular/eva-icons";
 import { ChatComponent } from "./chat/chat.component";
 import { HttpClientModule } from "@angular/common/http";
+import { createCustomElement } from "@angular/elements";
 
 @NgModule({
     declarations: [AppComponent, ChatComponent],
@@ -28,6 +29,18 @@ import { HttpClientModule } from "@angular/common/http";
         NbSpinnerModule
     ],
     providers: [],
-    bootstrap: [AppComponent]
+    bootstrap: [AppComponent],
+    entryComponents: [ChatComponent]
 })
-export class AppModule {}
+export class AppModule {
+    constructor(private injector: Injector) {}
+
+    ngDoBootstrap() {
+        // using createCustomElement from angular package it will convert angular component to stander web component
+        const el = createCustomElement(AppComponent, {
+            injector: this.injector
+        });
+        // using built in the browser to create your own custome element name
+        customElements.define("chat-bot", el);
+    }
+}

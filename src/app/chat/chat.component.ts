@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, Inject } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 
 @Component({
@@ -9,13 +9,16 @@ import { HttpClient } from "@angular/common/http";
 export class ChatComponent implements OnInit {
     messages = [];
     loading = false;
-
+    private context: string;
     // Random ID to maintain session with server
     sessionId = Math.random()
         .toString(36)
         .slice(-5);
 
-    constructor(private http: HttpClient) {}
+    constructor(
+        private http: HttpClient,
+        @Inject("BASE_URL") private baseUrl: string
+    ) {}
 
     ngOnInit() {
         this.addBotMessage("Human presence detected 🤖. How can I help you? ");
@@ -24,6 +27,27 @@ export class ChatComponent implements OnInit {
     handleUserMessage(event) {
         console.log(event);
         const text = event.message;
+        this.loading = true;
+        // Make an HTTP Request
+        this.http
+            .get<any>(`${this.baseUrl}/Dialog/GetResponseFromDialogFlow?`, {
+                params: {
+                    question: text,
+                    context: this.context
+                }
+            })
+            .toPromise()
+            .then(
+                res => {
+                    this.context = res.context;
+                    this.addBotMessage(res.data);
+                    this.loading = false;
+                },
+                err => {
+                    console.log(err);
+                }
+            );
+
         this.addUserMessage(text);
     }
 
