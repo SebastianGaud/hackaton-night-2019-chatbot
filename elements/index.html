@@ -161,6 +161,23 @@
             }
         </style>
         <script>
+            $(document).mouseup(function(e) {
+                var container = $('[data-show="chat"]');
+
+                // if the target of the click isn't the container nor a descendant of the container
+                if (
+                    !container.is(e.target) &&
+                    container.has(e.target).length === 0
+                ) {
+                    container.hide();
+                    var element = document
+                        .querySelectorAll('[ data-click-show="chat"]')
+                        .forEach(e => {
+                            e.style.display = "flex";
+                        });
+                }
+            });
+
             function showChat(event) {
                 var element = document.querySelector('[data-show="chat"]');
                 element.style.display = "block";
@@ -168,6 +185,16 @@
                     .querySelectorAll('[ data-click-show="chat"]')
                     .forEach(e => {
                         e.style.display = "none";
+                    });
+            }
+
+            function hideChat(event) {
+                var element = document.querySelector('[data-show="chat"]');
+                element.style.display = "none";
+                var element = document
+                    .querySelectorAll('[ data-click-show="chat"]')
+                    .forEach(e => {
+                        e.style.display = "fles";
                     });
             }
 
