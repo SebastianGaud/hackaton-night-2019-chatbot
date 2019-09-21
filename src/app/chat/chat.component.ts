@@ -21,7 +21,7 @@ export class ChatComponent implements OnInit {
     ) {}
 
     ngOnInit() {
-        this.addBotMessage("Human presence detected 🤖. How can I help you? ");
+        this.addBotMessage("Ciao, ti posso aiutare?");
     }
 
     handleUserMessage(event) {
