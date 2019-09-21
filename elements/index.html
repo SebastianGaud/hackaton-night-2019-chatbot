@@ -9,6 +9,14 @@
         <base href="" />
     </head>
     <body>
+        <div
+            data-click-show="chat"
+            hide-timeoute="chat"
+            onclick="showChat(event)"
+            class="box sb4 chat-message"
+        >
+            Ciao, se hai bisogno di me, clicca il robottino!!
+        </div>
         <div class="chat-icon" data-click-show="chat" onclick="showChat(event)">
             <img
                 width="50px"
@@ -23,11 +31,19 @@
         </div>
         <script type="text/javascript" src="./chat-bot.js"></script>
         <style>
+            .chat-message {
+                position: fixed;
+                right: 70px;
+                bottom: 94px;
+                animation: mover 1s 5 alternate;
+            }
+
             .chat {
                 position: fixed;
                 right: 10px;
-                bottom: -185px;
+                bottom: -160px;
                 display: none;
+                z-index: 400000;
             }
 
             .chat-icon {
@@ -41,8 +57,90 @@
                 width: 70px;
                 height: 70px;
                 background-color: orange;
-                animation: mover 1s 3 alternate;
+                animation: mover 1s 5 alternate;
                 z-index: 400000;
+            }
+
+            .box {
+                width: 300px;
+                background: #00bfb6;
+                padding: 20px;
+                text-align: center;
+                font-weight: 900;
+                color: #fff;
+                font-family: arial;
+                z-index: 50000000;
+            }
+
+            .sb1:before {
+                content: "";
+                width: 0px;
+                height: 0px;
+                position: absolute;
+                border-left: 10px solid #00bfb6;
+                border-right: 10px solid transparent;
+                border-top: 10px solid #00bfb6;
+                border-bottom: 10px solid transparent;
+                right: -19px;
+                top: 6px;
+            }
+
+            .sb2:before {
+                content: "";
+                width: 0px;
+                height: 0px;
+                position: absolute;
+                border-left: 10px solid transparent;
+                border-right: 10px solid #00bfb6;
+                border-top: 10px solid #00bfb6;
+                border-bottom: 10px solid transparent;
+                left: -19px;
+                top: 6px;
+            }
+
+            .sb3:before {
+                content: "";
+                width: 0px;
+                height: 0px;
+                position: absolute;
+                border-left: 10px solid #00bfb6;
+                border-right: 10px solid transparent;
+                border-top: 10px solid #00bfb6;
+                border-bottom: 10px solid transparent;
+                left: 19px;
+                bottom: -19px;
+            }
+
+            .sb4:before {
+                content: "";
+                width: 0px;
+                height: 0px;
+                position: absolute;
+                border-left: 10px solid transparent;
+                border-right: 10px solid #00bfb6;
+                border-top: 10px solid #00bfb6;
+                border-bottom: 10px solid transparent;
+                right: 19px;
+                bottom: -19px;
+            }
+
+            /* youtube link */
+            .youtube {
+                position: fixed;
+                bottom: 10px;
+                right: 10px;
+                width: 160px;
+                text-align: center;
+                padding: 15px 10px;
+                background: #bb0000;
+                border-radius: 5px;
+            }
+
+            .youtube a {
+                text-decoration: none;
+                color: #fff;
+                text-transform: capitalize;
+                letter-spacing: 1px;
             }
 
             @-webkit-keyframes mover {
@@ -66,11 +164,18 @@
             function showChat(event) {
                 var element = document.querySelector('[data-show="chat"]');
                 element.style.display = "block";
-                var element = document.querySelector(
-                    '[ data-click-show="chat"]'
-                );
-                element.style.display = "none";
+                var element = document
+                    .querySelectorAll('[ data-click-show="chat"]')
+                    .forEach(e => {
+                        e.style.display = "none";
+                    });
             }
+
+            setTimeout(function() {
+                document.querySelector(
+                    '[ hide-timeoute="chat"]'
+                ).style.display = "none";
+            }, 5000);
         </script>
     </body>
 </html>

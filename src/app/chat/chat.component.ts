@@ -9,7 +9,11 @@ import { HttpClient } from "@angular/common/http";
 export class ChatComponent implements OnInit {
     messages = [];
     loading = false;
-    private context: string;
+    context: string;
+    conversationId = Math.random()
+        .toString(36)
+        .slice(-5);
+
     // Random ID to maintain session with server
     sessionId = Math.random()
         .toString(36)
@@ -33,7 +37,8 @@ export class ChatComponent implements OnInit {
             .get<any>(`${this.baseUrl}/Dialog/GetResponseFromDialogFlow?`, {
                 params: {
                     question: text,
-                    context: this.context
+                    context: this.context,
+                    conversationId: this.conversationId
                 }
             })
             .toPromise()
