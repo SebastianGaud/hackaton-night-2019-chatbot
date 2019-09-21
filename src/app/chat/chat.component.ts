@@ -69,7 +69,8 @@ export class ChatComponent implements OnInit {
         this.messages.push({
             text,
             sender: "Bot",
-            avatar: "/assets/bot-icon.png",
+            avatar:
+                "https://wordpress-136743-992194.cloudwaysapps.com/wp-content/themes/twentyseventeen/assets/images/bot-icon.png",
             date: new Date()
         });
     }
